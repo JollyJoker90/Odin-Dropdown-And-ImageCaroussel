@@ -1,12 +1,14 @@
 const Dropdown = (dropdownContainer) => {
   const btn = dropdownContainer.querySelector("button");
   // const items = dropdownContainer.querySelectorAll("div");
-  const items = dropdownContainer.children;
+  const items = Array.from(dropdownContainer.children);
+  console.log(items);
+  console.log(items.slice(1));
   btn.addEventListener("click", () => {
     // items.forEach((item) => {
     //   item.classList.toggle("hidden");
     // });
-    items.splice(0, 1).forEach((item) => {
+    items.slice(1).forEach((item) => {
       item.classList.toggle("hidden");
     });
   });
