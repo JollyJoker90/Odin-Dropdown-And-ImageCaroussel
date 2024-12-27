@@ -8,9 +8,12 @@ const Carousel = (carouselContainer) => {
       item.style.display = "none";
     });
   };
-  // console.log(items);
+  const ActivateImage = (index) => {
+    items[index].style.display = "block";
+  };
+
   resetImages();
-  items[imgIndex].style.display = "block";
+  ActivateImage(imgIndex);
 
   const prev = document.createElement("button");
   prev.textContent = "prev";
@@ -23,7 +26,31 @@ const Carousel = (carouselContainer) => {
   carouselContainer.prepend(prev);
   carouselContainer.append(next);
 
-  const nextImage = () => {};
+  const indicators = [];
+  items.forEach((item) => {
+    console.log(item);
+  });
+
+  const ChangeImage = () => {
+    if (imgIndex < 0) {
+      imgIndex = items.length - 1;
+    }
+    resetImages();
+    ActivateImage(imgIndex % 3);
+  };
+
+  const nextImage = () => {
+    imgIndex += 1;
+    ChangeImage();
+  };
+
+  const prevImage = () => {
+    imgIndex -= 1;
+    ChangeImage();
+  };
+
+  next.addEventListener("click", nextImage);
+  prev.addEventListener("click", prevImage);
 };
 
 export default Carousel;
