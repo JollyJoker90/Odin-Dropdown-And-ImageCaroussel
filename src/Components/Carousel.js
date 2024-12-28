@@ -1,6 +1,6 @@
 const Carousel = (carouselContainer) => {
   let imgIndex = 0;
-  carouselContainer.style.position = "relative";
+  const indicators = [];
   const items = Array.from(carouselContainer.children);
 
   const resetImages = () => {
@@ -12,8 +12,14 @@ const Carousel = (carouselContainer) => {
     items[index].style.display = "block";
   };
 
-  resetImages();
-  ActivateImage(imgIndex);
+  const ResetIndicators = () => {
+    indicators.forEach((indicator) => {
+      indicator.classList.remove("active");
+    });
+  };
+  const ActivateIndicator = (index) => {
+    indicators[index].classList.add("active");
+  };
 
   const prev = document.createElement("button");
   prev.textContent = "prev";
@@ -26,17 +32,36 @@ const Carousel = (carouselContainer) => {
   carouselContainer.prepend(prev);
   carouselContainer.append(next);
 
-  const indicators = [];
-  items.forEach((item) => {
-    console.log(item);
-  });
+  const handleIndicator = (e) => {
+    ResetIndicators();
+    e.target.classList.add("active");
+    imgIndex = e.target.dataset.id;
+    ChangeImage(imgIndex);
+  };
 
+  const indicatorContainer = document.createElement("div");
+  indicatorContainer.classList.add("indicator-container");
+  items.forEach(() => {
+    const circle = document.createElement("span");
+    circle.classList.add("indicator");
+    indicators.push(circle);
+    circle.dataset.id = indicators.length - 1;
+    indicatorContainer.append(circle);
+    circle.addEventListener("click", handleIndicator);
+  });
+  resetImages();
+  ActivateImage(imgIndex);
+  ActivateIndicator(imgIndex);
+
+  carouselContainer.append(indicatorContainer);
   const ChangeImage = () => {
     if (imgIndex < 0) {
       imgIndex = items.length - 1;
     }
     resetImages();
     ActivateImage(imgIndex % 3);
+    ResetIndicators();
+    ActivateIndicator(imgIndex % 3);
   };
 
   const nextImage = () => {

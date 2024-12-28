@@ -18,6 +18,7 @@ hr {
 }
 
 .carousel {
+  position: relative;
   display: flex;
   width: 400px;
 }
@@ -47,6 +48,29 @@ hr {
 
 .next {
   right: 12px;
+}
+
+.indicator-container {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.indicator {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0.5;
+}
+
+.active {
+  opacity: 0.9;
 }
 
 .hidden {
